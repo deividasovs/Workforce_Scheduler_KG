@@ -1,0 +1,6 @@
+pytest
+boto3
+requests
+pandas
+numpy
+ortools

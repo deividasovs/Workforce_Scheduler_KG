@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  workforce-scheduler-sam
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 8
+  Api:
+    Cors:
+      AllowMethods: "'GET,POST,OPTIONS'"
+      AllowHeaders: "'content-type'"
+      AllowOrigin: "'*'"
+      AllowCredentials: "'*'"
+
+Resources:
+  CreateScheduleFn:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: Main/
+      Handler: main.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - arm64
+      Events:
+        HelloWorld:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            #Path: /create_schedule
+            Path: "/{proxy+}"
+            Method: any
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  CreateScheduleAPI:
+    Description: "API Gateway endpoint URL for Prod stage for CreateScheduleFn function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/create_schedule/"
+  CreateScheduleFn:
+    Description: "Create Schedule Function ARN"
+    Value: !GetAtt CreateScheduleFn.Arn
+  CreateScheduleFnIamRole:
+    Description: "Implicit IAM Role created for Create Schedule function"
+    Value: !GetAtt CreateScheduleFnRole.Arn
