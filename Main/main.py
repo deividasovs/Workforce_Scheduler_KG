@@ -11,7 +11,6 @@ def lambda_handler(event, context):
     body = event  # temp
     #sampleInputf = open('./sampleInput.json')
     #sampleInput = json.load(sampleInputf)
-    #res = lambda_handler(sampleInput, 0)
 
     # End testing purposes
 

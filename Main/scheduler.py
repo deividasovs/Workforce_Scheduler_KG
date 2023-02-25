@@ -1,12 +1,7 @@
-# Adapted from https://github.com/google/or-tools/blob/master/examples/python/shift_scheduling_sat.py
+# Script adapted from https://github.com/google/or-tools/blob/master/examples/python/shift_scheduling_sat.py
 # For more, take a look at https://developers.google.com/optimization/scheduling/employee_scheduling#nurse_scheduling
 # and https://developers.google.com/optimization/cp/cp_solver
 
-# TODO: Set each shift equal to a time they'd be working at?
-# Or decouple that and set it in another script
-
-
-# Imports
 import pandas as pd
 
 from ortools.sat.python import cp_model
@@ -17,12 +12,7 @@ from employee_data import EmployeeData
 
 
 def solve_shift_scheduling(employeeData: EmployeeData):
-    """Solves the shift scheduling problem."""
-
-    #employeeData = EmployeeData()
-
-    num_shifts, num_employees, num_days = len(employeeData.get_shifts()
-                                              )-1, employeeData.get_num_employees(), employeeData.get_num_days()
+    num_shifts, num_employees, num_days = len(employeeData.get_shifts()), employeeData.get_num_employees(), employeeData.get_num_days()
 
     model = cp_model.CpModel()
 
@@ -161,16 +151,11 @@ def solve_shift_scheduling(employeeData: EmployeeData):
                 print('  %s violated by %i, linear penalty=%i' %
                       (var.Name(), solver.Value(var), obj_int_coeffs[i]))
 
-    # print()
     statistics = 'Statistics' + '\n'
     statistics += '  - status          : %s' % solver.StatusName(status) + '\n'
     statistics += '  - conflicts       : %i' % solver.NumConflicts() + '\n'
     statistics += '  - branches        : %i' % solver.NumBranches() + '\n'
     statistics += '  - wall time       : %f s' % solver.WallTime() + '\n'
 
-    # print(statistics)
 
-    # res.to_csv('shift_scheduling.csv')
-
-    # return res.iloc[:, 0:2].to_json()
     return res.to_csv(), statistics

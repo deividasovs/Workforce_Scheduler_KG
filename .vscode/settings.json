@@ -1,4 +1,6 @@
 {
     "workbench.colorTheme": "Monokai",
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    "editor.formatOnSaveMode": "file",
+    "editor.formatOnSave": false
 }
