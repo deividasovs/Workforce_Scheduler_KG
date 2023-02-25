@@ -16,6 +16,8 @@ def lambda_handler(event, context):
 
     employeeData = convert_to_employee(body)
 
+    print(employeeData)
+
     schedule, stats = solve_shift_scheduling(employeeData)
 
     responseBody = {
@@ -42,7 +44,11 @@ def lambda_handler(event, context):
 if __name__ == "__main__":
     #res = lambda_handler(0, 0)
     #    sampleInputf = open('./Examples/sampleInput2.json')
-    sampleInputf = open('./Main/sampleInput2.json')
+    sampleInputf = open('./Main/tests/testData/SampleOptimalInput.json')
     sampleInput = json.load(sampleInputf)
     res = lambda_handler(sampleInput, 0)
-    print(res)
+    # Parse res json
+    res = json.loads(res['body'])
+
+    print("\n")
+    print(res['stats'])

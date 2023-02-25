@@ -2,8 +2,6 @@ from employee_data import EmployeeData
 
 
 # TODO: Instead of employee numbers, assign IDs to them!
-
-
 def convert_to_employee(payload):
     employeeData = EmployeeData()
 

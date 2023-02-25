@@ -1,3 +1,5 @@
+# Adapted from https://github.com/google/or-tools/blob/master/examples/python/shift_scheduling_sat.py
+
 # Constraints
 # 0 = hard constraint
 
