@@ -1,35 +1,31 @@
 import json
 
-from json_to_employee_data import convert_to_employee
+from json_to_employee_data import convert_to_employee_data
 from scheduler import solve_shift_scheduling
 
 
 def lambda_handler(event, context):
-    #body_str = event.get('body', '{}')
-    #body = json.loads(body_str)
-    # ------ for testing purposes & without container-------
-    body = event  # temp
-    #sampleInputf = open('./sampleInput.json')
-    #sampleInput = json.load(sampleInputf)
+    body_str = event.get('body', '{}')
+    body = json.loads(body_str)
+    
+    body = event  # Use when testing
 
-    # End testing purposes
+    employee_data = convert_to_employee_data(body)
 
-    employeeData = convert_to_employee(body)
+    print(employee_data)
 
-    print(employeeData)
+    schedule, stats = solve_shift_scheduling(employee_data)
 
-    schedule, stats = solve_shift_scheduling(employeeData)
-
-    responseBody = {
+    response_body = {
         "schedule": schedule,
         "stats": stats
     }
 
-    responseBody = json.dumps(responseBody)
+    response_body = json.dumps(response_body)
 
     return {
         'statusCode': 200,
-        'body': responseBody,
+        'body': response_body,
         'headers': {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
@@ -42,12 +38,9 @@ def lambda_handler(event, context):
 
 # For testing purposes
 if __name__ == "__main__":
-    #res = lambda_handler(0, 0)
-    #    sampleInputf = open('./Examples/sampleInput2.json')
-    sampleInputf = open('./Main/tests/testData/SampleOptimalInput.json')
-    sampleInput = json.load(sampleInputf)
-    res = lambda_handler(sampleInput, 0)
-    # Parse res json
+    test_input = open('./Main/tests/testData/sample_dept_4_input.json')
+    test_input_json = json.load(test_input)
+    res = lambda_handler(test_input_json, 0)
     res = json.loads(res['body'])
 
     print("\n")

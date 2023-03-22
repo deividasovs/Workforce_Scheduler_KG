@@ -1,9 +1,3 @@
-# Data
-# Have an array of num_employees, doing this scheduling for each one
-
-# TODO: Assign id to employee, when assigning shifts
-
-
 class EmployeeData:
     def __init__(self):
         self.num_employees = 0

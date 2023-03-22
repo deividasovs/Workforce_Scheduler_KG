@@ -6,10 +6,8 @@
 # Shift constraints on continuous sequence :
 #  (shift, hard_min, soft_min, min_penalty, soft_max, hard_max, max_penalty)
 shift_constraints = [
-    # One or two consecutive days of rest, this is a hard constraint.
+    # One or two consecutive days of rest as a hard constraint.
     (0, 1, 1, 0, 2, 2, 0),
-    # between 2 and 3 consecutive days of night shifts, 1 and 4 are possible but penalized.
-    #(1, 1, 2, 20, 3, 4, 5),
 ]
 
 # Weekly sum constraints on shifts days:
@@ -17,8 +15,6 @@ shift_constraints = [
 weekly_sum_constraints = [
     # Constraints on rests per week.
     (0, 1, 2, 7, 2, 3, 4),
-    # At least 1 night shift per week (penalized). At most 4 (hard).
-    #(3, 0, 1, 3, 4, 4, 0),
 ]
 
 # Penalized transitions:
@@ -30,7 +26,11 @@ penalized_transitions = [
 ]
 
 # Penalty for exceeding the cover constraint per shift type.
-excess_cover_penalties = (2, 2, 5)
+# Shift, week, day
+excess_cover_penalties = (1, 0, 5)
+excess_cover_penalties = (2, 0, 5)
+excess_cover_penalties = (3, 0, 5)
+excess_cover_penalties = (4, 0, 5)
 
 
 def negated_bounded_span(works, start, length):

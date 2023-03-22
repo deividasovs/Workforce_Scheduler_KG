@@ -2,5 +2,6 @@
     "workbench.colorTheme": "Monokai",
     "python.formatting.provider": "black",
     "editor.formatOnSaveMode": "file",
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "python.analysis.typeCheckingMode": "basic"
 }

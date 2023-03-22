@@ -1,30 +1,28 @@
 from employee_data import EmployeeData
 
-
-# TODO: Instead of employee numbers, assign IDs to them!
-def convert_to_employee(payload):
-    employeeData = EmployeeData()
+def convert_to_employee_data(payload):
+    employee_data = EmployeeData()
 
     print(payload)
 
     requests = convertInnerToTuple(payload['Requests'])
-    numEmployees = payload['EmployeeCount']
-    fixedAssignments = convertInnerToTuple(payload['FixedAssignments'])
+    num_employees = payload['EmployeeCount']
+    fixed_assignments = convertInnerToTuple(payload['FixedAssignments'])
 
     shifts = payload['Shifts']
-    weeklyCoverDemand = convertInnerToTuple(payload['WeeklyCoverDemand'])
+    weekly_cover_demand = convertInnerToTuple(payload['WeeklyCoverDemand'])
 
-    employeeData.set_num_employees(numEmployees)
-    employeeData.set_requests(requests)
-    employeeData.set_shifts(shifts)
-    employeeData.set_fixed_assignments(fixedAssignments)
-    employeeData.set_weekly_demands(weeklyCoverDemand)
+    employee_data.set_num_employees(num_employees)
+    employee_data.set_requests(requests)
+    employee_data.set_shifts(shifts)
+    employee_data.set_fixed_assignments(fixed_assignments)
+    employee_data.set_weekly_demands(weekly_cover_demand)
 
-    return employeeData
+    return employee_data
 
 
-def convertInnerToTuple(arr2d):
-    arr2dTupl = []
-    for i in range(len(arr2d)):
-        arr2dTupl.append(tuple(arr2d[i]))
-    return arr2dTupl
+def convertInnerToTuple(arr):
+    array_in_tuples = []
+    for i in range(len(arr)):
+        array_in_tuples.append(tuple(arr[i]))
+    return array_in_tuples
