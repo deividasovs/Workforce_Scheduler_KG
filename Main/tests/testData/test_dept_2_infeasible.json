@@ -1,0 +1,17 @@
+{
+    "EmployeeCount": 3,
+    "Shifts": ["O","M","N"],
+    "Requests": [[1,2,2]],
+    "FixedAssignments": [
+        [0,2,0]
+    ],
+    "WeeklyCoverDemand": [
+        [1,1],
+        [1,1],
+        [2,1],
+        [1,2],
+        [2,1],
+        [1,1],
+        [1,1]
+    ]
+}

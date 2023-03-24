@@ -32,13 +32,13 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Amz-Date, X-Api-Key, X-Amz-Security-Token, X-Amz-User-Agent',
             'Content-Type': 'application/json',
         }
-
     }
-
 
 # For testing purposes
 if __name__ == "__main__":
-    test_input = open('./Main/tests/testData/sample_dept_4_input.json')
+    #test_input = open('./Main/tests/testData/test_dept_1_optimal.json')
+    test_input = open('./Main/tests/testData/test_dept_4_optimal.json')
+    #test_input = open('./Main/tests/testData/test_dept_2_infeasible.json')
     test_input_json = json.load(test_input)
     res = lambda_handler(test_input_json, 0)
     res = json.loads(res['body'])

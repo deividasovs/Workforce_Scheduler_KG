@@ -1,5 +1,7 @@
-# Script adapted from https://github.com/google/or-tools/blob/master/examples/python/shift_scheduling_sat.py
-# For more, take a look at https://developers.google.com/optimization/scheduling/employee_scheduling#nurse_scheduling
+# This script is imported and adapted from the shift_scheduling_sat.py file in the examples/python directory of the Google OR-Tools library's GitHub repository.
+# Github repository - https://github.com/google/or-tools/blob/master/examples/python/shift_scheduling_sat.py
+
+# If curious, take a look at https://developers.google.com/optimization/scheduling/employee_scheduling#nurse_scheduling
 # and https://developers.google.com/optimization/cp/cp_solver
 
 import pandas as pd
@@ -40,11 +42,9 @@ def solve_shift_scheduling(employeeData: EmployeeData):
         for d in range(num_days):
             model.AddExactlyOne(work[e, s, d] for s in range(num_shifts))
 
-    # Fixed assignments.
+    # Fixed assignments
     for e, s, d in employeeData.get_fixed_assignments():
         model.Add(work[e, s, d] == 1)
-
-    for e, s, d in employeeData.get_fixed_assignments():
         obj_bool_vars.append(work[e, s, d])
         obj_bool_coeffs.append(1)
 
@@ -64,7 +64,7 @@ def solve_shift_scheduling(employeeData: EmployeeData):
     for ct in weekly_sum_constraints:
         shift, hard_min, soft_min, min_cost, soft_max, hard_max, max_cost = ct
         for e in range(num_employees):
-            works = [work[e, shift, d] for d in range(7)]
+            works = [work[e, shift, d] for d in range(num_days)]
             variables, coeffs = add_soft_sum_constraint(
                 model, works, hard_min, soft_min, min_cost, soft_max,
                 hard_max, max_cost,
@@ -74,22 +74,23 @@ def solve_shift_scheduling(employeeData: EmployeeData):
             obj_int_coeffs.extend(coeffs)
 
     # Penalized transitions
-    for previous_shift, next_shift, cost in penalized_transitions:
-        for e in range(num_employees):
-            for d in range(num_days - 1):
-                transition = [
-                    work[e, previous_shift, d].Not(), work[e, next_shift,
-                                                           d + 1].Not()
-                ]
-                if cost == 0:
-                    model.AddBoolOr(transition)
-                else:
-                    trans_var = model.NewBoolVar(
-                        'transition (employee=%i, day=%i)' % (e, d))
-                    transition.append(trans_var)
-                    model.AddBoolOr(transition)
-                    obj_bool_vars.append(trans_var)
-                    obj_bool_coeffs.append(cost)
+    if(num_shifts > 2):
+        for previous_shift, next_shift, cost in penalized_transitions:
+            for e in range(num_employees):
+                for d in range(num_days - 1):
+                    transition = [
+                        work[e, previous_shift, d].Not(), work[e, next_shift,
+                                                            d + 1].Not()
+                    ]
+                    if cost == 0:
+                        model.AddBoolOr(transition)
+                    else:
+                        trans_var = model.NewBoolVar(
+                            'transition (employee=%i, day=%i)' % (e, d))
+                        transition.append(trans_var)
+                        model.AddBoolOr(transition)
+                        obj_bool_vars.append(trans_var)
+                        obj_bool_coeffs.append(cost)
 
     # Cover constraints
     for s in range(1, num_shifts):

@@ -1,37 +1,31 @@
-# Adapted from https://github.com/google/or-tools/blob/master/examples/python/shift_scheduling_sat.py
+# This script is imported and adapted from the shift_scheduling_sat.py file in the examples/python directory of the Google OR-Tools library's GitHub repository.
+# Github repository - https://github.com/google/or-tools/blob/master/examples/python/shift_scheduling_sat.py
 
 # Constraints
 # 0 = hard constraint
 
-# Shift constraints on continuous sequence :
+# In future, these will need to be modified to suit each department's needs specifically
+
 #  (shift, hard_min, soft_min, min_penalty, soft_max, hard_max, max_penalty)
 shift_constraints = [
-    # One or two consecutive days of rest as a hard constraint.
-    (0, 1, 1, 0, 2, 2, 0),
+    # 1-4 consecutive days of rest as a hard constraint.
+    (0, 1, 2, 0, 3, 6, 3),
 ]
 
-# Weekly sum constraints on shifts days:
 # (shift, hard_min, soft_min, min_penalty, soft_max, hard_max, max_penalty)
 weekly_sum_constraints = [
     # Constraints on rests per week.
-    (0, 1, 2, 7, 2, 3, 4),
-]
+    (0, 2, 2, 0, 5, 7, 3) # Large time ranges to accomodate for part-timers who may be off most of the week
+] 
 
-# Penalized transitions:
 #     (previous_shift, next_shift, penalty (0 means forbidden))
 penalized_transitions = [
-    # Afternoon to early and vice versa both have a penalty of 4
-    #(1, 2, 4),
-    #(2, 1, 4),
+    (1, 2, 2),
+    (2, 1, 2),
 ]
 
 # Penalty for exceeding the cover constraint per shift type.
-# Shift, week, day
-excess_cover_penalties = (1, 0, 5)
-excess_cover_penalties = (2, 0, 5)
-excess_cover_penalties = (3, 0, 5)
-excess_cover_penalties = (4, 0, 5)
-
+excess_cover_penalties = (1, 1, 1, 1)
 
 def negated_bounded_span(works, start, length):
     """Filters an isolated sub-sequence of variables assigned to True.

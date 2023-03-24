@@ -3,8 +3,6 @@ from employee_data import EmployeeData
 def convert_to_employee_data(payload):
     employee_data = EmployeeData()
 
-    print(payload)
-
     requests = convertInnerToTuple(payload['Requests'])
     num_employees = payload['EmployeeCount']
     fixed_assignments = convertInnerToTuple(payload['FixedAssignments'])
