@@ -8,11 +8,13 @@ def lambda_handler(event, context):
     body_str = event.get('body', '{}')
     body = json.loads(body_str)
     
-    body = event  # Use when testing
+    print(body)
+
+    #body = event  # Uncomment when testing
 
     employee_data = convert_to_employee_data(body)
 
-    print(employee_data)
+    # print(employee_data)
 
     schedule, stats = solve_shift_scheduling(employee_data)
 

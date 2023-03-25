@@ -16,20 +16,21 @@ Globals:
 
 Resources:
   CreateScheduleFn:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function 
     Properties:
-      CodeUri: Main/
-      Handler: main.lambda_handler
-      Runtime: python3.9
+      PackageType: Image
       Architectures:
         - arm64
       Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+        CreateSchedule:
+          Type: Api 
           Properties:
-            #Path: /create_schedule
-            Path: "/{proxy+}"
+            Path: /create_schedule
             Method: any
+
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./Main
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

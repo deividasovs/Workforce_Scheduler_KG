@@ -8,4 +8,5 @@ s3_prefix = "workforce-scheduler"
 region = "eu-west-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
-image_repositories = []
+image_repositories = ["CreateScheduleFn=050362355799.dkr.ecr.eu-west-1.amazonaws.com/workforce-scheduler-ecr"]
+disable_rollback = true
