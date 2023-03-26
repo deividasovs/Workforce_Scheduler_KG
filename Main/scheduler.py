@@ -122,6 +122,7 @@ def solve_shift_scheduling(employeeData: EmployeeData):
     status = solver.Solve(model, solution_printer)
 
     # Print solution.
+    """
     if status == cp_model.OPTIMAL or status == cp_model.FEASIBLE:
         print()
         header = '          M T W T F S S '
@@ -151,6 +152,7 @@ def solve_shift_scheduling(employeeData: EmployeeData):
             if solver.Value(var) > 0:
                 print('  %s violated by %i, linear penalty=%i' %
                       (var.Name(), solver.Value(var), obj_int_coeffs[i]))
+        """
 
     statistics = 'Statistics' + '\n'
     statistics += '  - status          : %s' % solver.StatusName(status) + '\n'
